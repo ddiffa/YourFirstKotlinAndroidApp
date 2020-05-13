@@ -3,6 +3,7 @@ package com.hellodiffa.yourfirstkotlinandroidapp
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -39,7 +40,9 @@ class MainActivity : AppCompatActivity() {
         gameScoreTextView = findViewById(R.id.gameScoreTextView)
         timeLeftTextView = findViewById(R.id.timeLeftTextView)
 
-        tapMeButton.setOnClickListener { _ ->
+        tapMeButton.setOnClickListener { view ->
+            val bounceAnimation = AnimationUtils.loadAnimation(this, R.anim.bounce)
+            view.startAnimation(bounceAnimation)
             incrementScore()
         }
 
@@ -103,6 +106,9 @@ class MainActivity : AppCompatActivity() {
         score += 1
         val newScore = getString(R.string.yourScore, score)
         gameScoreTextView.text = newScore
+
+        val blinkAnimation = AnimationUtils.loadAnimation(this, R.anim.blank)
+        gameScoreTextView.startAnimation(blinkAnimation)
     }
 
 
