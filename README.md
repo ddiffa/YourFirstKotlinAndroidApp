@@ -2,11 +2,9 @@
 <img src="https://github.com/ddiffa/YourFirstKotlinAndroidApp/blob/master/preview/1.jpg"
 width="256">&nbsp;&nbsp;&nbsp;
 
-- [Todo List](https://github.com/ddiffa/YourFirstKotlinAndroidApp/blob/master/app/todo/TodoList.md)
-
 # Challenge
 
-- [x] Produce a Todo List
+- [x] [Produce a Todo List](https://github.com/ddiffa/YourFirstKotlinAndroidApp/blob/master/app/todo/TodoList.md)
 - [x] Add another TextView
 - [x] Adding a Constraint
 - [x] Adding an ID
