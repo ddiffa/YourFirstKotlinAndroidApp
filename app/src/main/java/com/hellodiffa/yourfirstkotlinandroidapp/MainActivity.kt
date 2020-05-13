@@ -10,25 +10,30 @@ import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
-    internal var score = 0
-
-    internal var gameStarted = false
-
-    internal lateinit var countDownTimer: CountDownTimer
-    internal val initialCountDown: Long = 60_000L
-    internal val countDownInterval: Long = 1_000L
-
     internal lateinit var tapMeButton: Button
     internal lateinit var gameScoreTextView: TextView
     internal lateinit var timeLeftTextView: TextView
 
 
+    internal var score = 0
+    internal var gameStarted = false
+
+    internal lateinit var countDownTimer: CountDownTimer
+    internal val initialCountDown: Long = 60_000L
+    internal val countDownInterval: Long = 1_000L
+    internal var timeLeftOnTimer : Long = 60_000L
+
+    companion object {
+        private val TAG = MainActivity::class.java.simpleName
+        private const val SCORE_KEY = "SCORE_KEY"
+        private const val TIME_LEFT_KEY = "TIME_LEFT_KEY"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
+        Log.d(TAG, "onCreate called. Score is: $score")
 
         tapMeButton = findViewById(R.id.tapMeButton)
         gameScoreTextView = findViewById(R.id.gameScoreTextView)
@@ -41,6 +46,21 @@ class MainActivity : AppCompatActivity() {
         resetGame()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putInt(SCORE_KEY, score)
+        outState.putLong(TIME_LEFT_KEY, timeLeftOnTimer)
+
+        countDownTimer.cancel()
+        Log.d(TAG, "onSaveInstanceState: Saving Score: $score & Time Left: $timeLeftOnTimer")
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG, "onDestroy called")
+    }
     private fun resetGame() {
         score = 0
 
@@ -55,6 +75,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onTick(millisUntilFinished: Long) {
+                timeLeftOnTimer = millisUntilFinished
                 val timeLeft = millisUntilFinished / 1_000L
                 timeLeftTextView.text = getString(R.string.timeLeft, timeLeft)
             }
